@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class PictogramNormalizer implements NormalizerInterface
 {
     /** @var string[] */
-    protected $supportedFormats = ['standard'];
+    protected $supportedFormats = ['standard', 'flat'];
 
     /**
      * @param Pictogram $entity

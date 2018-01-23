@@ -1,17 +1,10 @@
 parameters:
-    pim_custom_entity.normalizer.referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
+    pim_custom_entity.normalizer.flat.reference_data.class: Pim\Bundle\CustomEntityBundle\Normalizer\Flat\ReferenceDataNormalizer
+
     pim_custom_entity.normalizer.custom_entity.class: Pim\Bundle\CustomEntityBundle\Normalizer\CustomEntityNormalizer
     pim_custom_entity.normalizer.standard.minimal.class: Pim\Bundle\CustomEntityBundle\Normalizer\Standard\MinimalStandardNormalizer
 
 services:
-    pim_custom_entity.normalizer.referable:
-        class: '%pim_custom_entity.normalizer.referable.class%'
-        arguments:
-            - ['csv', 'flat']
-        tags:
-            - { name: pim_versioning.serializer.normalizer, priority: 100 }
-            - { name: pim_serializer.normalizer, priority: 100 }
-
     pim_custom_entity.normalizer.internal_api.custom_entity:
         class: '%pim_custom_entity.normalizer.custom_entity.class%'
         arguments:
@@ -22,3 +15,17 @@ services:
         class: '%pim_custom_entity.normalizer.standard.minimal.class%'
         tags:
             - { name: pim_serializer.normalizer, priority: 150 }
+
+    pim_custom_entity.normalizer.flat.reference_data:
+        public: false
+        class: '%pim_custom_entity.normalizer.standard.reference_data.class%'
+        arguments:
+            - '@pim_custom_entity.reflection.reflection_class'
+            - '@pim_custom_entity.reflection.class_metadata'
+            - '@property_accessor'
+            - '@pim_catalog.normalizer.standard.translation'
+        calls:
+            - ['setSkippedFields', [ ['id', 'created', 'updated', 'locale'] ] ]
+        tags:
+            - { name: pim_versioning.serializer.normalizer, priority: 100 }
+            - { name: pim_serializer.normalizer, priority: 100 }

@@ -1,0 +1,14 @@
+parameters:
+    pim_custom_entity.reflection.class_metadata.class: Pim\Bundle\CustomEntityBundle\Reflection\ClassMetadataRegistry
+    pim_custom_entity.reflection.reflection_class.class: Pim\Bundle\CustomEntityBundle\Reflection\ReflectionClassRegistry
+
+services:
+    pim_custom_entity.reflection.class_metadata:
+        class: '%pim_custom_entity.reflection.class_metadata.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    pim_custom_entity.reflection.reflection_class:
+        class: '%pim_custom_entity.reflection.reflection_class.class%'
+        arguments:
+            - '@property_accessor'
