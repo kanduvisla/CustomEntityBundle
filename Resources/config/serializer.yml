@@ -18,7 +18,7 @@ services:
 
     pim_custom_entity.normalizer.flat.reference_data:
         public: false
-        class: '%pim_custom_entity.normalizer.standard.reference_data.class%'
+        class: '%pim_custom_entity.normalizer.flat.reference_data.class%'
         arguments:
             - '@pim_custom_entity.reflection.reflection_class'
             - '@pim_custom_entity.reflection.class_metadata'
